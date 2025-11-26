@@ -15,7 +15,11 @@
 
     const ComputerScoreDisplay = document.createElement('div');
     ComputerScoreDisplay.textContent = (`Computer score: ${computerScore}`);
-    
+
+    const ComputerChoiceDisplay = document.createElement('div');
+
+    const resultDisplay = document.createElement('div');
+      
     const rock = document.createElement('button');
     rock.textContent = 'Rock';
     rock.style.marginRight = '15px';
@@ -26,7 +30,7 @@
     scissors.textContent = 'Scissors';
     scissors.style.marginRight = '15px';
 
-    gui.append(roundDisplay, yourScoreDisplay, ComputerScoreDisplay, rock, paper, scissors);
+    gui.append(roundDisplay, yourScoreDisplay, ComputerScoreDisplay, ComputerChoiceDisplay, resultDisplay, rock, paper, scissors);
     
     const choiceButton = [rock, paper, scissors];
     choiceButton.toLowerCase
@@ -56,37 +60,31 @@ function playGame() {
   const {result, humanChoice, computerChoice} = playRound();
   roundDisplay.textContent = `Round: ${round}`;
   round++;
-  console.log(`Round ${round}`);
 if (result === "Win") {
   humanScore += 1;
-  console.log ("You win!", humanChoice, "beats", computerChoice,"!");
-  console.log ("Your score:", humanScore);
-  console.log ("Computer's score:", computerScore);
+  resultDisplay.textContent = (`You win in this round!`);
 }
 
 if (result === "Lose") {
   computerScore += 1;
-  console.log ("You lose!", computerChoice, "beats", humanChoice,"!");
-  console.log ("Your score:", humanScore);
-  console.log ("Computer's score:", computerScore);
+  resultDisplay.textContent = (`You lost in this round!`);
 }
 
 if (result === "Tie") {
-    console.log("It's a tie!")
-    console.log ("Your score:", humanScore);
-    console.log ("Computer's score:", computerScore);
+    resultDisplay.textContent = (`It's a tie in this round!`);
 }
 yourScoreDisplay.textContent = (`Your score: ${humanScore}`);
 ComputerScoreDisplay.textContent = (`Computer score: ${computerScore}`);
 
 if (round >= maxRounds) {
+  ComputerChoiceDisplay.textContent = (` `);
   roundDisplay.textContent = ('Game Over!')
 if (humanScore > computerScore) {
-    console.log("You win the game!");
+    resultDisplay.textContent = (`You win the game!`);
 } else if (computerScore > humanScore) {
-    console.log("Computer won the game!");
+    resultDisplay.textContent = (`Computer won the game!`);
 } else {
-    console.log("It's a complete tie!");
+    resultDisplay.textContent = (`It's a complete tie!`);
 }
 }
 }
@@ -94,15 +92,14 @@ if (humanScore > computerScore) {
 function playRound() {
     const computerChoice = getComputerChoice();
     let result
-    console.log("Human choice:", humanChoice);
-console.log("Computer choice:", computerChoice);
+    ComputerChoiceDisplay.textContent = (`Computer chose ${computerChoice}`);
 if (
     (humanChoice === "rock" && computerChoice === "scissors") ||
     (humanChoice === "paper" && computerChoice === "rock") ||
     (humanChoice === "scissors" && computerChoice === "paper")
   ) {
     result = "Win";
-    
+
   } else if (humanChoice === computerChoice) {
     result = "Tie";
   } else {
